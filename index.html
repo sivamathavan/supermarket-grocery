@@ -1,0 +1,795 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>GreenGrocers Coimbatore | Fresh Grocery & Supermarket Delivery</title>
+    <meta name="description" content="Freshest vegetables, fruits, dairy, and household essentials in Coimbatore. Order on WhatsApp for home delivery. GreenGrocers - Fresh. Local. Delivered.">
+    <meta name="keywords" content="Supermarket Coimbatore, Grocery Delivery Coimbatore, Fresh Vegetables Coimbatore, Online Grocery Tamil Nadu, Best Supermarket in Coimbatore">
+    
+    <!-- Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Quicksand:wght@400;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <!-- Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    
+    <style>
+        :root {
+            --primary: #2E8B57; /* Fresh Green */
+            --primary-dark: #1E5D3A;
+            --accent: #FF6600; /* Orange Accent */
+            --white: #FFFFFF;
+            --bg-light: #F9FBF9;
+            --text-dark: #2D3436;
+            --text-muted: #636E72;
+            --shadow: 0 10px 30px rgba(46, 139, 87, 0.1);
+            --transition: all 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        /* --- Fresh Reveal --- */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px) scale(0.95);
+            transition: all 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        /* --- Category Pulse --- */
+        @keyframes categoryPulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        .category-btn:hover { animation: categoryPulse 0.5s ease-in-out infinite; }
+
+        /* --- Eco Glow --- */
+        .card:hover {
+            box-shadow: 0 0 25px rgba(46, 139, 87, 0.2);
+            border-color: var(--primary);
+        }
+
+        /* --- Leaf Pulse --- */
+        @keyframes leafPulse {
+            0% { transform: scale(1); filter: drop-shadow(0 0 2px var(--primary)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 10px var(--primary)); }
+            100% { transform: scale(1); filter: drop-shadow(0 0 2px var(--primary)); }
+        }
+        .logo i { animation: leafPulse 3s infinite; }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
+        }
+
+        h1, h2, h3, h4, .friendly {
+            font-family: 'Quicksand', sans-serif;
+            font-weight: 700;
+        }
+
+        body {
+            background-color: var(--bg-light);
+            color: var(--text-dark);
+            line-height: 1.6;
+        }
+
+        /* --- Layout & Nav --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: var(--white);
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            z-index: 1000;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            font-size: 1.5rem;
+            font-weight: 700;
+            font-family: 'Quicksand', sans-serif;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 600;
+            font-size: 0.95rem;
+            transition: var(--transition);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .nav-cta {
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.7rem 1.5rem;
+            border-radius: 50px;
+            text-decoration: none;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: var(--transition);
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(255, 102, 0, 0.3);
+        }
+
+        /* --- Hero --- */
+        #hero {
+            padding: 10rem 5% 6rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            align-items: center;
+            gap: 4rem;
+            background: linear-gradient(135deg, #F0F9F4 0%, #FFFFFF 100%);
+        }
+
+        .hero-text h1 {
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            color: var(--primary-dark);
+            line-height: 1.2;
+            margin-bottom: 1.5rem;
+        }
+
+        .hero-text p {
+            font-size: 1.2rem;
+            color: var(--text-muted);
+            margin-bottom: 2.5rem;
+            max-width: 500px;
+        }
+
+        .hero-image img {
+            width: 100%;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Category Strip --- */
+        .category-strip {
+            padding: 2rem 5%;
+            display: flex;
+            gap: 1rem;
+            overflow-x: auto;
+            background: var(--white);
+            scrollbar-width: none;
+            -ms-overflow-style: none;
+        }
+
+        .category-strip::-webkit-scrollbar { display: none; }
+
+        .category-btn {
+            padding: 0.8rem 2rem;
+            background: #F1F3F1;
+            border-radius: 50px;
+            white-space: nowrap;
+            cursor: pointer;
+            transition: var(--transition);
+            font-weight: 600;
+            border: 1px solid transparent;
+        }
+
+        .category-btn:hover, .category-btn.active {
+            background: var(--primary);
+            color: var(--white);
+        }
+
+        /* --- Section Styling --- */
+        section {
+            padding: 6rem 5%;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .section-header h2 {
+            font-size: 2.5rem;
+            color: var(--primary-dark);
+            margin-bottom: 1rem;
+        }
+
+        .section-header p {
+            color: var(--text-muted);
+        }
+
+        /* --- Offer Cards --- */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+        }
+
+        .card {
+            background: var(--white);
+            border-radius: 15px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+            transition: var(--transition);
+            position: relative;
+            border: 1px solid #EEF2EE;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow);
+            border-color: var(--primary);
+        }
+
+        .badge {
+            position: absolute;
+            top: 1rem;
+            right: 1rem;
+            background: var(--accent);
+            color: var(--white);
+            padding: 0.3rem 0.8rem;
+            border-radius: 5px;
+            font-weight: 700;
+            font-size: 0.8rem;
+        }
+
+        .card img {
+            width: 100%;
+            height: 200px;
+            object-fit: contain;
+            margin-bottom: 1rem;
+        }
+
+        .card h3 {
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .card .unit {
+            color: var(--text-muted);
+            font-size: 0.9rem;
+            display: block;
+            margin-bottom: 1rem;
+        }
+
+        .card .price {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: var(--primary);
+            display: block;
+            margin-bottom: 1.5rem;
+        }
+
+        .order-btn {
+            display: block;
+            width: 100%;
+            padding: 1rem;
+            background: var(--primary);
+            color: var(--white);
+            text-align: center;
+            text-decoration: none;
+            border-radius: 10px;
+            font-weight: 600;
+            transition: var(--transition);
+        }
+
+        .order-btn:hover {
+            background: var(--primary-dark);
+        }
+
+        /* --- How to Order --- */
+        .how-to {
+            background: #F0F9F4;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .step {
+            padding: 2rem;
+        }
+
+        .step-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 1.5rem;
+            font-size: 2rem;
+            color: var(--primary);
+            box-shadow: var(--shadow);
+        }
+
+        /* --- Why Shop --- */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 2rem;
+        }
+
+        .feature-item {
+            text-align: center;
+            padding: 2rem;
+        }
+
+        .feature-item i {
+            font-size: 3rem;
+            color: var(--accent);
+            margin-bottom: 1rem;
+        }
+
+        /* --- Floating WhatsApp --- */
+        .whatsapp-float {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background: #25D366;
+            color: white;
+            width: 65px;
+            height: 65px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+            z-index: 10000;
+            transition: var(--transition);
+            text-decoration: none;
+        }
+
+        .whatsapp-float:hover {
+            transform: scale(1.1);
+        }
+
+        /* --- Footer --- */
+        footer {
+            background: var(--primary-dark);
+            color: var(--white);
+            padding: 5rem 5% 2rem;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 4rem;
+            margin-bottom: 4rem;
+        }
+
+        .footer-col h4 {
+            margin-bottom: 1.5rem;
+            font-size: 1.2rem;
+        }
+
+        .footer-col ul {
+            list-style: none;
+        }
+
+        .footer-col ul li {
+            margin-bottom: 0.8rem;
+        }
+
+        .footer-col ul li a {
+            color: #A8D1B8;
+            text-decoration: none;
+            transition: var(--transition);
+        }
+
+        .footer-col ul li a:hover {
+            color: var(--white);
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            font-size: 0.9rem;
+            opacity: 0.8;
+        }
+
+        /* --- Pages Management --- */
+        .page { display: none; }
+        .page.active { display: block; }
+
+        /* --- Responsive --- */
+        @media (max-width: 968px) {
+            #hero { grid-template-columns: 1fr; text-align: center; padding-top: 8rem; }
+            .hero-text p { margin: 0 auto 2.5rem; }
+            .nav-links { display: none; }
+        }
+
+        /* Contact Form */
+        .contact-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+        }
+
+        .contact-form {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .contact-form input, .contact-form textarea, .contact-form select {
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            outline: none;
+        }
+
+        .contact-form button {
+            padding: 1rem;
+            background: var(--primary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-weight: 700;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- WhatsApp Float -->
+    <a href="https://wa.me/919000000000" class="whatsapp-float" target="_blank">
+        <i class="ph-fill ph-whatsapp-logo"></i>
+    </a>
+
+    <!-- Nav -->
+    <nav>
+        <a href="#" class="logo" onclick="showPage('home')">
+            <i class="ph-fill ph-leaf"></i> GreenGrocers
+        </a>
+        <div class="nav-links">
+            <a href="#" onclick="showPage('home')">Home</a>
+            <a href="#" onclick="showPage('products')">Products</a>
+            <a href="#" onclick="showPage('offers')">Weekly Offers</a>
+            <a href="#" onclick="showPage('bulk')">Bulk Orders</a>
+            <a href="#" onclick="showPage('contact')">Contact</a>
+        </div>
+        <a href="https://wa.me/919000000000" class="nav-cta">
+            <i class="ph-bold ph-whatsapp-logo"></i> Order on WhatsApp
+        </a>
+    </nav>
+
+    <!-- --- HOME PAGE --- -->
+    <main id="home-page" class="page active">
+        <section id="hero">
+            <div class="hero-text">
+                <h1 style="animation: slideInLeft 1s ease both;">Coimbatore's Freshest<br>Grocery Store</h1>
+                <p style="animation: slideInLeft 1s ease 0.2s both;">Get farm-fresh vegetables, quality grains, and household essentials delivered right to your doorstep within 2 hours.</p>
+                <div style="display: flex; gap: 1rem; animation: slideInLeft 1s ease 0.4s both;">
+                    <a href="#" class="order-btn" style="width: auto; padding: 1.2rem 2.5rem;" onclick="showPage('products')">Shop Now</a>
+                    <a href="https://wa.me/919000000000" class="order-btn" style="width: auto; padding: 1.2rem 2.5rem; background: var(--accent);">Order on WhatsApp</a>
+                </div>
+            </div>
+            <div class="hero-image" style="animation: zoomIn 1s ease both;">
+                <img src="https://images.unsplash.com/photo-1542838132-92c53300491e?q=80&w=1000&auto=format&fit=crop" alt="Fresh Produce">
+            </div>
+        </section>
+
+        @keyframes slideInLeft {
+            from { opacity: 0; transform: translateX(-30px); }
+            to { opacity: 1; transform: translateX(0); }
+        }
+        @keyframes zoomIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        <div class="category-strip">
+            <div class="category-btn active" onclick="filterProducts('all', event)">Fresh Vegetables</div>
+            <div class="category-btn" onclick="filterProducts('fruits', event)">Fruits</div>
+            <div class="category-btn" onclick="filterProducts('dairy', event)">Dairy</div>
+            <div class="category-btn" onclick="filterProducts('snacks', event)">Snacks</div>
+            <div class="category-btn" onclick="filterProducts('grains', event)">Grains</div>
+            <div class="category-btn" onclick="filterProducts('household', event)">Household</div>
+            <div class="category-btn" onclick="filterProducts('beverages', event)">Beverages</div>
+        </div>
+
+        <section id="weekly-offers" class="reveal">
+            <div class="section-header">
+                <h2>Weekly Mega Offers</h2>
+                <p>Exclusive discounts on your daily essentials</p>
+            </div>
+            <div class="grid" id="offers-grid">
+                <!-- Offers load here -->
+            </div>
+        </section>
+
+        <section class="how-to">
+            <div class="step">
+                <div class="step-icon"><i class="ph-bold ph-whatsapp-logo"></i></div>
+                <h3>1. WhatsApp Us</h3>
+                <p>Send 'Hi' or your grocery list to our official number.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="ph-bold ph-list-checks"></i></div>
+                <h3>2. Confirm List</h3>
+                <p>We'll verify the total and availability within minutes.</p>
+            </div>
+            <div class="step">
+                <div class="step-icon"><i class="ph-bold ph-moped"></i></div>
+                <h3>3. Get Delivery</h3>
+                <p>Choose Home Delivery or Store Pickup at your convenience.</p>
+            </div>
+        </section>
+
+        <section id="why-us">
+            <div class="section-header">
+                <h2>Why Shop With Us?</h2>
+            </div>
+            <div class="features-grid">
+                <div class="feature-item">
+                    <i class="ph-bold ph-clock-countdown"></i>
+                    <h3>Fresh Daily</h3>
+                    <p>Stock replenished every morning directly from local farms.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="ph-bold ph-tag"></i>
+                    <h3>Best Prices</h3>
+                    <p>Competitive local pricing without middleman markups.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="ph-bold ph-house-line"></i>
+                    <h3>Home Delivery</h3>
+                    <p>Free delivery across Coimbatore for orders above ₹500.</p>
+                </div>
+                <div class="feature-item">
+                    <i class="ph-bold ph-package"></i>
+                    <h3>Bulk Orders</h3>
+                    <p>Special pricing for restaurants, hostels, and offices.</p>
+                </div>
+            </div>
+        </section>
+
+        <section id="brands">
+            <div class="section-header">
+                <h2>Brands You Trust</h2>
+            </div>
+            <div style="display: flex; justify-content: space-around; flex-wrap: wrap; gap: 3rem; opacity: 0.6; filter: grayscale(1);">
+                <span style="font-size: 1.5rem; font-weight: 700;">NESTLE</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">AMUL</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">BRITANNIA</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">AASHIRVAAD</span>
+                <span style="font-size: 1.5rem; font-weight: 700;">MILKY MIST</span>
+            </div>
+        </section>
+    </main>
+
+    <!-- --- PRODUCTS PAGE --- -->
+    <main id="products-page" class="page">
+        <section>
+            <div class="section-header">
+                <h2>Our Catalog</h2>
+                <p>Quality products for your healthy home</p>
+            </div>
+            <div class="category-strip" style="background: transparent; justify-content: center; margin-bottom: 3rem;">
+                <div class="category-btn active" onclick="filterProducts('all', event)">All</div>
+                <div class="category-btn" onclick="filterProducts('vegetable', event)">Vegetables</div>
+                <div class="category-btn" onclick="filterProducts('fruit', event)">Fruits</div>
+                <div class="category-btn" onclick="filterProducts('dairy', event)">Dairy</div>
+                <div class="category-btn" onclick="filterProducts('grain', event)">Grains</div>
+            </div>
+            <div class="grid" id="products-grid">
+                <!-- Products load here -->
+            </div>
+        </section>
+    </main>
+
+    <!-- --- OFFERS PAGE --- -->
+    <main id="offers-page" class="page">
+        <section>
+            <div class="section-header">
+                <h2>Current Offers</h2>
+                <p>Valid until Sunday</p>
+            </div>
+            <div class="grid" id="full-offers-grid"></div>
+        </section>
+    </main>
+
+    <!-- --- BULK ORDERS PAGE --- -->
+    <main id="bulk-page" class="page">
+        <section>
+            <div class="contact-container">
+                <div>
+                    <h2 class="friendly" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Wholesale & Bulk Orders</h2>
+                    <p style="margin-bottom: 2rem;">We supply to the finest restaurants and caterers in Coimbatore. Get customized pricing for bulk quantities of fresh produce and staples.</p>
+                    <ul style="list-style: none; margin-bottom: 2rem;">
+                        <li style="margin-bottom: 1rem;"><i class="ph ph-check-circle" style="color: var(--primary);"></i> Priority Morning Delivery</li>
+                        <li style="margin-bottom: 1rem;"><i class="ph ph-check-circle" style="color: var(--primary);"></i> Monthly Credit Billing Available</li>
+                        <li style="margin-bottom: 1rem;"><i class="ph ph-check-circle" style="color: var(--primary);"></i> Quality Assurance Guarantees</li>
+                    </ul>
+                    <a href="https://wa.me/919000000000?text=I'm interested in bulk ordering" class="order-btn" style="width: auto; padding: 1rem 2rem;">Chat with Bulk Order Manager</a>
+                </div>
+                <form class="contact-form">
+                    <h3>Bulk Inquiry Form</h3>
+                    <input type="text" placeholder="Business Name / Contact Person" required>
+                    <input type="tel" placeholder="Mobile Number" required>
+                    <select required>
+                        <option value="" disabled selected>Business Type</option>
+                        <option>Restaurant / Cafe</option>
+                        <option>Hostel / PG</option>
+                        <option>Office Pantry</option>
+                        <option>Event Caterer</option>
+                    </select>
+                    <textarea rows="5" placeholder="Estimated weekly requirement (e.g., 50kg Onion, 20L Milk...)"></textarea>
+                    <button type="submit">Get Wholesale Quote</button>
+                </form>
+            </div>
+        </section>
+    </main>
+
+    <!-- --- CONTACT PAGE --- -->
+    <main id="contact-page" class="page">
+        <section>
+            <div class="contact-container">
+                <div class="info">
+                    <h2 class="friendly" style="font-size: 2.5rem; margin-bottom: 1.5rem;">Visit Our Store</h2>
+                    <div style="margin-bottom: 2rem;">
+                        <h4><i class="ph ph-map-pin"></i> Location</h4>
+                        <p>45, Thiruvenkataswamy Rd West, RS Puram,<br>Coimbatore, Tamil Nadu 641002</p>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <h4><i class="ph ph-clock"></i> Opening Hours</h4>
+                        <p>Mon - Sat: 7:00 AM - 10:00 PM<br>Sunday: 7:00 AM - 9:00 PM</p>
+                    </div>
+                    <div style="margin-bottom: 2rem;">
+                        <h4><i class="ph ph-truck"></i> Delivery Coverage</h4>
+                        <p>RS Puram, Saibaba Colony, Ganapathy, Peelamedu, Town Hall.</p>
+                    </div>
+                </div>
+                <div style="width: 100%; height: 400px; background: #ddd; border-radius: 15px; display: flex; align-items: center; justify-content: center;">
+                    <p>Google Maps Integration Placeholder</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="footer-col">
+                <a href="#" class="logo" style="color: white; margin-bottom: 1.5rem;">
+                    <i class="ph-fill ph-leaf"></i> GreenGrocers
+                </a>
+                <p style="opacity: 0.8;">Serving Coimbatore with the freshest produce since 2010. Quality you can trust, prices you'll love.</p>
+            </div>
+            <div class="footer-col">
+                <h4>Quick Links</h4>
+                <ul>
+                    <li><a href="#" onclick="showPage('home')">Home</a></li>
+                    <li><a href="#" onclick="showPage('products')">Products</a></li>
+                    <li><a href="#" onclick="showPage('bulk')">Wholesale</a></li>
+                    <li><a href="#" onclick="showPage('contact')">Find Store</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Customer Care</h4>
+                <ul>
+                    <li><a href="https://wa.me/919000000000">WhatsApp Order</a></li>
+                    <li><a href="#">Delivery Policy</a></li>
+                    <li><a href="#">Returns & Refunds</a></li>
+                    <li><a href="#">Feedback</a></li>
+                </ul>
+            </div>
+            <div class="footer-col">
+                <h4>Contact Us</h4>
+                <p>RS Puram, Coimbatore<br>+91 90000 00000<br>hello@greengrocers.in</p>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2026 GreenGrocers Supermarket. Freshly Crafted by Antigravity.
+        </div>
+    </footer>
+
+    <script>
+        const products = [
+            { id: 1, name: "Premium Ooty Carrots", category: "vegetable", unit: "500g", price: "₹45", offer: "Save ₹10", img: "https://images.unsplash.com/photo-1598170845058-32b9d6a5da37?q=80&w=500&auto=format&fit=crop" },
+            { id: 2, name: "Farm Fresh Tomatoes", category: "vegetable", unit: "1kg", price: "₹30", offer: "Fresh Stock", img: "https://images.unsplash.com/photo-1592924357228-91a4daadcfea?q=80&w=500&auto=format&fit=crop" },
+            { id: 3, name: "Alphonso Mangoes", category: "fruit", unit: "1kg", price: "₹180", offer: "Seasonal Special", img: "https://images.unsplash.com/photo-1553279768-865429fa0078?q=80&w=500&auto=format&fit=crop" },
+            { id: 4, name: "Full Cream Milk", category: "dairy", unit: "1L", price: "₹64", offer: "", img: "https://images.unsplash.com/photo-1563636619-e9107da5a76a?q=80&w=500&auto=format&fit=crop" },
+            { id: 5, name: "Organic Ponni Rice", category: "grain", unit: "5kg", price: "₹345", offer: "₹20 OFF", img: "https://images.unsplash.com/photo-1586201375761-83865001e31c?q=80&w=500&auto=format&fit=crop" },
+            { id: 6, name: "Natural Set Curd", category: "dairy", unit: "500g", price: "₹55", offer: "Bestseller", img: "https://images.unsplash.com/photo-1485921325833-c519f76c4927?q=80&w=500&auto=format&fit=crop" }
+        ];
+
+        function loadAll() {
+            const offersGrid = document.getElementById('offers-grid');
+            const productsGrid = document.getElementById('products-grid');
+            const fullOffersGrid = document.getElementById('full-offers-grid');
+
+            // Load Offers (items with offer text)
+            const offerItems = products.filter(p => p.offer !== "");
+            offerItems.forEach(p => {
+                const card = createCard(p, true);
+                if(offersGrid) offersGrid.innerHTML += card;
+                if(fullOffersGrid) fullOffersGrid.innerHTML += card;
+            });
+
+            // Load All Products
+            products.forEach(p => {
+                if(productsGrid) productsGrid.innerHTML += createCard(p, false);
+            });
+        }
+
+        function createCard(p, showOffer) {
+            return `
+                <div class="card">
+                    ${p.offer && showOffer ? `<span class="badge">${p.offer}</span>` : ''}
+                    <img src="${p.img}" alt="${p.name}">
+                    <h3>${p.name}</h3>
+                    <span class="unit">${p.unit}</span>
+                    <span class="price">${p.price}</span>
+                    <a href="https://wa.me/919000000000?text=I'd like to order ${p.name} (${p.unit})" class="order-btn">Add to WhatsApp List</a>
+                </div>
+            `;
+        }
+
+        function filterProducts(category, event) {
+            const grid = document.getElementById('products-grid');
+            if(!grid) return;
+
+            // Update UI
+            const btns = event.target.parentElement.querySelectorAll('.category-btn');
+            btns.forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+
+            grid.innerHTML = '';
+            const filtered = category === 'all' ? products : products.filter(p => p.category === category);
+            filtered.forEach(p => {
+                grid.innerHTML += createCard(p, false);
+            });
+        }
+
+        function showPage(pageId) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(p => p.classList.remove('active'));
+            document.getElementById(pageId + '-page').classList.add('active');
+            window.scrollTo(0,0);
+        }
+
+        // --- Reveal Logic ---
+        function initReveal() {
+            const reveals = document.querySelectorAll('.reveal');
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('active');
+                    }
+                });
+            }, { threshold: 0.1 });
+            reveals.forEach(r => observer.observe(r));
+        }
+
+        document.addEventListener('DOMContentLoaded', () => {
+            loadAll();
+            initReveal();
+        });
+    </script>
+</body>
+</html>
